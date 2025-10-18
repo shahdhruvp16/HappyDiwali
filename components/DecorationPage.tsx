@@ -59,7 +59,7 @@ const DecorationPage: React.FC<DecorationPageProps> = ({ decorations, setDecorat
             <div className="flex-grow w-full max-w-4xl mx-auto my-4 relative" onDrop={handleDrop} onDragOver={handleDragOver}>
                 <div 
                     className="absolute inset-0 bg-contain bg-no-repeat bg-center"
-                    style={{ backgroundImage: `url('https://i.imgur.com/uDfm4q1.png')` }} // A simple house illustration
+                    style={{ backgroundImage: `url('https://imgs.search.brave.com/w2_gXrDn10rNqjT_WUaZ_q6zeIOSKxUKHMufK96lfDI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS12ZWN0/b3IvdmVjdG9yLWls/bHVzdHJhdGlvbi1p/bmRpYW4taG91c2Ut/dmVjdG9yLWFydC12/aWxsYWdlLWhvdXNl/LWluZGlhbi12aWxs/YWdlLWJhY2tncm91/bmQtY2FydG9vbl83/MzY2ODYtNjE4Lmpw/Zz9zZW10PWFpc19o/eWJyaWQ')` }} // A simple house illustration
                 ></div>
                 {decorations.map(renderDecoration)}
             </div>
