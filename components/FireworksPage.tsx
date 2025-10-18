@@ -1,9 +1,9 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Firework } from '../types';
 import { FIREWORK_MESSAGES } from '../constants';
 
-const FireworkParticle: React.FC<{ x: number, y: number, message: string }> = ({ x, y, message }) => {
+// ---------- Firework Particle Component ----------
+const FireworkParticle: React.FC<{ x: number; y: number; message: string }> = ({ x, y, message }) => {
     const particleCount = 60;
     const particles = Array.from({ length: particleCount });
     const colors = ['#FFD700', '#FF6347', '#00FF7F', '#1E90FF', '#FF69B4', '#FFFFFF'];
@@ -16,8 +16,7 @@ const FireworkParticle: React.FC<{ x: number, y: number, message: string }> = ({
                 const duration = Math.random() * 0.8 + 1.2;
                 const delay = Math.random() * 0.1;
                 const color = colors[Math.floor(Math.random() * colors.length)];
-                
-                // FIX: Cast style object to React.CSSProperties to allow for custom CSS properties (--angle, --radius, etc.).
+
                 return (
                     <div
                         key={i}
@@ -33,11 +32,16 @@ const FireworkParticle: React.FC<{ x: number, y: number, message: string }> = ({
                     ></div>
                 );
             })}
-            <div className="absolute -translate-x-1/2 -translate-y-1/2 text-white font-bold text-2xl drop-shadow-lg"
-                 style={{ animation: 'fadeInOut 2s ease-in-out forwards' }}
+
+            {/* Message in the center of explosion */}
+            <div
+                className="absolute -translate-x-1/2 -translate-y-1/2 text-white font-bold text-2xl drop-shadow-lg"
+                style={{ animation: 'fadeInOut 2s ease-in-out forwards' }}
             >
                 {message}
             </div>
+
+            {/* Firework Animations */}
             <style>{`
                 @keyframes explode-and-fall {
                     0% {
@@ -63,7 +67,7 @@ const FireworkParticle: React.FC<{ x: number, y: number, message: string }> = ({
     );
 };
 
-
+// ---------- Fireworks Page Component ----------
 interface FireworksPageProps {
     onComplete: () => void;
 }
@@ -77,20 +81,39 @@ const FireworksPage: React.FC<FireworksPageProps> = ({ onComplete }) => {
             id: Date.now(),
             x: e.clientX,
             y: e.clientY,
-            message: FIREWORK_MESSAGES[Math.floor(Math.random() * FIREWORK_MESSAGES.length)]
+            message: FIREWORK_MESSAGES[Math.floor(Math.random() * FIREWORK_MESSAGES.length)],
         };
-        setFireworks(prev => [...prev, newFirework]);
-        setClicks(prev => prev + 1);
+        setFireworks((prev) => [...prev, newFirework]);
+        setClicks((prev) => prev + 1);
     };
 
     return (
-        <div className="w-full h-full cursor-pointer relative" onClick={handleClick}>
-            {fireworks.map(fw => <FireworkParticle key={fw.id} x={fw.x} y={fw.y} message={fw.message} />)}
-            
+        <div className="w-full h-full cursor-pointer relative overflow-hidden bg-gradient-to-b from-slate-900 to-black" onClick={handleClick}>
+            {/* Render fireworks */}
+            {fireworks.map((fw) => (
+                <FireworkParticle key={fw.id} x={fw.x} y={fw.y} message={fw.message} />
+            ))}
+
+            {/* Instruction message (visible until first click) */}
+            {clicks < 1 && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <h3 className="text-2xl md:text-4xl font-dancing text-yellow-300 drop-shadow-lg animate-pulse text-center px-4">
+                        Click anywhere on the screen to celebrate Diwali 🎆
+                    </h3>
+                </div>
+            )}
+
+            {/* Bottom section */}
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-center text-white">
                 <h2 className="text-3xl font-dancing drop-shadow-lg mb-4">Light up the night!</h2>
                 {clicks >= 3 && (
-                    <button onClick={(e) => { e.stopPropagation(); onComplete(); }} className="px-8 py-3 bg-yellow-500 text-slate-900 font-bold rounded-full shadow-lg hover:bg-yellow-400 transform hover:scale-105 transition-all duration-300 animate-fade-in-up">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onComplete();
+                        }}
+                        className="px-8 py-3 bg-yellow-500 text-slate-900 font-bold rounded-full shadow-lg hover:bg-yellow-400 transform hover:scale-105 transition-all duration-300 animate-fade-in-up"
+                    >
                         Now let’s make your Diwali wish ✨
                     </button>
                 )}
