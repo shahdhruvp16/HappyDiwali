@@ -65,6 +65,10 @@ const DecorationPage: React.FC<DecorationPageProps> = ({ decorations, setDecorat
             </div>
 
             <div className="flex flex-col items-center space-y-4">
+              <h3 className="text-xl md:text-2xl font-dancing text-yellow-200 drop-shadow-md animate-fade-in-down text-center italic tracking-wide">
+  (Double-click on a decoration item and drop it wherever you like ✨)
+</h3>
+
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <DecorationItem type="diya" onDragStart={handleDragStart}><div className="relative w-12 h-8"><DiyaIcon/><LitDiyaFlame className="w-6 h-6 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-3"/></div></DecorationItem>
                     <DecorationItem type="lantern" onDragStart={handleDragStart}><LanternIcon className="w-10 h-16"/></DecorationItem>
